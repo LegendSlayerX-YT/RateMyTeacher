@@ -21,7 +21,16 @@ https://desktop.github.com/download/
 
 ### Clone this repository to your Computer
 https://github.com/LegendSlayerX-YT/RateMyTeacher.git
-In this step, you may need to register a github account.
+
+In this step, you may need to register a github account. Then
+1. Use Github Desktop to Log in your github account.
+2. Select: Clone Repository
+3. In the repository URL copy and paste the above link.
+
+<img width="540" height="314" alt="Screenshot 2026-02-08 at 11 35 58 AM" src="https://github.com/user-attachments/assets/e7a36c84-d8e9-4a12-b1d4-6deb1c1518b7" />
+
+This essentially helps sync the code in this github repository with a local folder on your computer.
+
 
 ## Dev Dependencies
 ### Flask Python Libray
