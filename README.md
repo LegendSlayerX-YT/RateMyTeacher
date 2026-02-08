@@ -32,9 +32,32 @@ In this step, you may need to register a github account. Then
 This essentially helps sync the code in this github repository with a local folder on your computer.
 
 
+## Database
+
+### Download and Install PostgreSQL
+https://www.postgresql.org/download/macosx/
+
+1. Just follow the Interactive installer by EDB.
+Follow all default options. For DB login password, let's use `abc123`.
+This is just for dev simplicity. For prod deployment, we will definitely use a more sophisicated password.
+2. No need to install ApplicationStack stuff.
+3. Start PostgreSQL Database Service on your local machine
+```
+sudo -i -u postgres
+
+/Library/PostgreSQL/18/bin/pg_ctl start -D /Library/PostgreSQL/18/data
+```
+
+
 ## Dev Dependencies
 ### Flask Python Libray
 We will use Flask library to build our backend library.
 ```
 pip3 install Flask
+```
+
+
+This library provides the interface to call PostgreSQL DB.
+```
+pip3 install psycopg2-binary
 ```
