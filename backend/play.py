@@ -20,13 +20,17 @@ The advantage of POST method is that the body is not subjust to URL length limit
 """
 @app.route("/teacher/<id>", methods=['GET', 'POST'])
 def query_teacher(id: str) -> str:
-    return f"""
+    
+    response = app.make_response(f"""
     You are quering teacher: <br>
     using method {request.method} <br>
     function argument {id} <br>
     request.args {request.args.get("id")} <br>
     request.data {request.data} <br>
-"""
+""")
+    
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
