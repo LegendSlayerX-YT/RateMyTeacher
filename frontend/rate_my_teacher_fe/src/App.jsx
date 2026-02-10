@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
-async function fetchAndSet (setPosts) {
+async function fetchAndSet (setPosts, teacherId) {
   try{
     console.log(setPosts)
-    const response = await fetch("http://127.0.0.1:5000/teacher/123?id=456")
+    const response = await fetch(
+      `http://192.168.0.76:5000/teacher/123?id=${teacherId}`
+    )
     console.log(response)
 
     const text = await response.text()
@@ -20,6 +22,8 @@ async function fetchAndSet (setPosts) {
 function App () {
   const [count, setCount] = useState(0)
 
+  const [teacherId, setTeacherId] = useState("")
+
   const [posts, setPosts] = useState("")
   console.log(setPosts)
 
@@ -30,10 +34,12 @@ function App () {
           count is {count}
         </button>
 
-
-        <button onClick={function(){fetchAndSet(setPosts)}}>
-          posts is {posts}
+        <input  type="text" value={teacherId} onChange={function(event) {setTeacherId(event.target.value)}}></input>
+        <button onClick={function(){fetchAndSet(setPosts, teacherId)}}>
+          Call API
         </button>
+        <br/>
+        <label>{posts}</label>
       </div>
 
     </>
