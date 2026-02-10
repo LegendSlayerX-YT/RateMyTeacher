@@ -48,6 +48,21 @@ sudo -i -u postgres
 /Library/PostgreSQL/18/bin/pg_ctl start -D /Library/PostgreSQL/18/data
 ```
 
+## React.js
+1. Install nvm and node.js
+https://nodejs.org/en/download
+
+2. 
+In the folder that you want to make the react app:
+```
+npm create vite@latest my-react-app -- --template react
+```
+
+3. 
+In the react app folder
+```
+npm run dev
+```
 
 ## Dev Dependencies
 ### Flask Python Libray
