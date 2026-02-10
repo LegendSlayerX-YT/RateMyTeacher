@@ -1,47 +1,37 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
-function fetchAndSet(setPosts) {
-  
-  
+async function fetchAndSet (setPosts) {
+  try{
+    console.log(setPosts)
+    const response = await fetch("http://127.0.0.1:5000/teacher/123?id=456")
+    console.log(response)
+
+    const text = await response.text()
+    console.log(text)
+
+    setPosts(text)
+  }
+  catch(err) {
+    console.log(err)
+  } 
 }
 
-function App() {
+function App () {
   const [count, setCount] = useState(0)
 
   const [posts, setPosts] = useState("")
-
-  useEffect(() => {
-    fetch("http://127.0.0.1:5000/teacher/123?id=456")
-    .then(      
-      (response) => {
-        console.log(response)
-        return response.text()
-      }
-    )
-    .then(
-      (body) => {
-        console.log(body)
-        setPosts(body)
-      }
-    )
-    .catch(
-      (err) => {
-        console.log(err)
-        setPosts(err)
-      }
-    )
-  }, []);
+  console.log(setPosts)
 
   return (
     <>
       <div className="card">        
-        <button onClick={() => setCount(count+1)}>
+        <button onClick={function(){setCount(count+1)}}>
           count is {count}
         </button>
 
 
-        <button>
+        <button onClick={function(){fetchAndSet(setPosts)}}>
           posts is {posts}
         </button>
       </div>
