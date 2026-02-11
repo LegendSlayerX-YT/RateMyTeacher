@@ -1,6 +1,5 @@
 {
   "name": "rate_my_teacher_fe",
-  "proxy": "http://127.0.0.1:5000",
   "private": true,
   "version": "0.0.0",
   "type": "module",
