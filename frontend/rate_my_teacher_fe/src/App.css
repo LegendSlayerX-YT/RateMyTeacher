@@ -1,4 +1,11 @@
-:root {
-  display: flex;
-  justify-content: center;
+.card{
+  display: block;
+  position: relative;
+}
+
+button {
+  display: block;
+}
+input {
+  display: block;
 }

@@ -1,5 +1,6 @@
 {
   "name": "rate_my_teacher_fe",
+  "proxy": "http://127.0.0.1:5000",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,9 +12,9 @@
   },
   "dependencies": {
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.13.0"
   },
-  "proxy": "http://127.0.0.1:5000",
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@types/react": "^19.2.7",
