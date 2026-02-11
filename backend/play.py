@@ -29,7 +29,7 @@ def query_teacher(id: str) -> str:
     request.data {request.data} <br>
 """)
     
-    response.headers['Access-Control-Allow-Origin'] = '*'
+    #response.headers['Access-Control-Allow-Origin'] = '*'
     return response
 
 if __name__ == "__main__":
