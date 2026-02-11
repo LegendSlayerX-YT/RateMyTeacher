@@ -46,6 +46,15 @@ function Home () {
         </button>
         <label>{posts}</label>
 
+        <div>
+          <input type="radio" name="teacher_group" id="teacher_radio_123" value="123" onChange={function(event) {setTeacherId(event.target.value)}} />
+          <label for="teacher_radio_123">Teacher ABC</label>
+        </div>
+        <div>
+          <input type="radio" name="teacher_group" id="teacher_radio_345" value="345" onChange={function(event) {setTeacherId(event.target.value)}} />
+          <label for="teacher_radio_345">Teacher CDE</label>
+        </div>
+
         <button onClick={function(){ navigateToViewRating(teacherId)} }>View Ratings</button>      
       
       </div>
