@@ -41,7 +41,7 @@ def Remove_school():
             schools.remove(school_remove)
             return '<h1>You removed'+ school_remove["school_id"] +'</h1>'  
     return '<h1>Imaging trying to remove something that doesn''t exist.</h1>'
-
+#hi
 
 if __name__ == '__main__':
     app.run(host='192.168.86.26')
