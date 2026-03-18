@@ -13,7 +13,7 @@ conn = psycopg2.connect(
 cur = conn.cursor()
 
 # Execute a query
-cur.execute("SELECT 1; ")
+cur.execute("SELECT * from teacher_sch.schools; ")
 
 # Fetch and print the results
 rows = cur.fetchall()
