@@ -1,5 +1,9 @@
 import json
 from flask import Flask, request
+from db.school import find_school
+from dotenv import load_dotenv
+
+load_dotenv()
 
 schools = []
 schools_counter = 0
@@ -30,11 +34,16 @@ def Add_school():
 
 @app.route('/school/query')
 def Query_school():
-    query_schoolID = request.args.get('school_id')
-    for school in schools:
-        if query_schoolID == school['school_id']:
-            return '<h1>' + str(school) + '</h1>'
-    return 'No school found. Imagine'
+    try:
+        query_schoolID = int(request.args.get('school_id'))
+    except ValueError:
+        return "Only numeric school id is allowed", 400
+    
+    school = find_school(query_schoolID)
+    
+    if school is None:
+        return "School not found", 404
+    return json.dumps(school._asdict())
 
 @app.route('/school/remove')
 def Remove_school():

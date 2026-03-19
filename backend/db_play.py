@@ -12,8 +12,14 @@ conn = psycopg2.connect(
 # Create a cursor object
 cur = conn.cursor()
 
+name = "Cottonwood Creek TK-8"
 # Execute a query
-cur.execute("SELECT * from teacher_sch.schools; ")
+cur.execute(f'''
+                SELECT id, name, country, state, city, zip_code, address, grade_level 
+                FROM teacher_sch.schools 
+                WHERE name = %s; 
+            ''',
+            [name])
 
 # Fetch and print the results
 rows = cur.fetchall()
