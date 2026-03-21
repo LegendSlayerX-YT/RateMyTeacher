@@ -1,6 +1,6 @@
 import json
 from flask import Flask, request
-from db.school import find_school, add_school
+from db.school import find_school, add_school, remove_school
 from dotenv import load_dotenv
 from db.vocab import SchoolEntity
 
@@ -45,12 +45,12 @@ def Query_school():
 
 @app.route('/school/remove')
 def Remove_school():
-    school_id = request.args.get('school_id')
-    for school in schools:
-        if school['school_id'] == school_id:
-            schools.remove(school)
-            return '<h1>You removed '+ school['school_id'] +'</h1>'  
-    return '<h1>Imaging trying to remove something that doesn''t exist.</h1>'
+    school_id = int(request.args.get('school_id'))
+    try:
+        del_count = remove_school(school_id)
+        return json.dumps({"removed_rows": del_count})
+    except:
+        return "Looks like something went wrong", 500
 
 @app.route('/teacher/add')
 def Add_teacher():
