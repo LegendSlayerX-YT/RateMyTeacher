@@ -77,3 +77,28 @@ def find_school(id : int) -> Optional[SchoolEntity]:
                 address=school[6],
                 grade_level=school[7],
             )
+
+def remove_school(id : int):
+    # Connect to your PostgreSQL database
+    with psycopg2.connect(
+        dbname=os.environ["DB_NAME"],
+        user=os.environ["DB_USER"],
+        password=os.environ["DB_PASSWORD"],
+        host=os.environ["DB_HOST"],
+        port=os.environ["DB_PORT"],
+    ) as conn:
+        # Create a cursor object
+        with conn.cursor() as cur:
+            # Execute a query
+            cur.execute('''
+                DELETE 
+                FROM teacher_sch.schools
+                WHERE id = %s
+                RETURNING *;
+            ''',
+            [id])
+            
+            # Fetch and print the results
+            rows = cur.fetchall()
+            
+            return len(rows)
