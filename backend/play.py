@@ -1,7 +1,8 @@
 import json
 from flask import Flask, request
-from db.school import find_school
+from db.school import find_school, add_school
 from dotenv import load_dotenv
+from db.vocab import SchoolEntity
 
 load_dotenv()
 
@@ -13,23 +14,19 @@ app = Flask(__name__)
 
 @app.route('/school/add')
 def Add_school():
-    global schools_counter
-    school_id = str(schools_counter)
-    schools_counter += 1
-    school_name = request.args.get('school_name')
-    school_state = request.args.get('school_state')
-    school_city = request.args.get('school_city')
-    school_street_address = request.args.get('school_street_address')
-    school_phone = request.args.get('school_phone')
-    school = {
-        'school_name' : school_name,
-        'school_state' : school_state,
-        'school_city' : school_city,
-        'school_street_address' : school_street_address,
-        'school_phone' : school_phone,
-        'school_id' : school_id
-    }
-    schools.append(school)
+    school_entity = SchoolEntity(
+        id=None,
+        name=request.args.get('school_name'),
+        country=request.args.get('school_country'),
+        state=request.args.get('school_state'),
+        city=request.args.get('school_city'),
+        zip_code=request.args.get('school_zip_code'),
+        address=request.args.get('school_street_address'),
+        grade_level=request.args.get('school_grade_level'),
+    )
+    school_id = add_school(school_entity)
+    if school_id is None:
+        return "Failed to add school", 500
     return str(school_id)
 
 @app.route('/school/query')
@@ -38,12 +35,13 @@ def Query_school():
         query_schoolID = int(request.args.get('school_id'))
     except ValueError:
         return "Only numeric school id is allowed", 400
-    
+
     school = find_school(query_schoolID)
-    
+
     if school is None:
         return "School not found", 404
     return json.dumps(school._asdict())
+
 
 @app.route('/school/remove')
 def Remove_school():
