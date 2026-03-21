@@ -27,7 +27,7 @@ def Add_school():
     school_id = add_school(school_entity)
     if school_id is None:
         return "Failed to add school", 500
-    return str(school_id)
+    return json.dumps({"school_id": school_id})
 
 @app.route('/school/query')
 def Query_school():
