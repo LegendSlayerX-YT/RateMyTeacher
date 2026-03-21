@@ -78,7 +78,7 @@ def find_school(id : int) -> Optional[SchoolEntity]:
                 grade_level=school[7],
             )
 
-def remove_school(id : int):
+def remove_school(id : int) -> Optional[int]:
     # Connect to your PostgreSQL database
     with psycopg2.connect(
         dbname=os.environ["DB_NAME"],
