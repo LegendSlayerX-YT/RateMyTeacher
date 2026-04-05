@@ -1,9 +1,10 @@
 import json
 from flask import Flask, request
 from dotenv import load_dotenv
+from dataclasses import asdict
 
-from db.school import find_school, add_school, remove_school, school_not_exist_in_db
-from db.vocab import SchoolEntity
+from db.school import find_school, add_school, remove_school
+from db.vocab import SchoolEntity, SchoolQueryCondition
 
 load_dotenv()
 
@@ -17,18 +18,18 @@ app = Flask(__name__) #WHAT
 # http://127.0.0.1:5000/school/add?school_name=aabbcc&school_country=kkddd
 @app.route('/school/add')
 def Add_school():
-    school_entity = SchoolEntity(
+    school_condition = SchoolQueryCondition(
         id=None,
-        name=request.args.get('school_name'),
-        country=request.args.get('school_country'),
-        state=request.args.get('school_state'),
-        city=request.args.get('school_city'),
-        zip_code=request.args.get('school_zip_code'),
-        address=request.args.get('school_street_address'),
-        grade_level=request.args.get('school_grade_level'),
+        name=request.args.get('name'),
+        country=request.args.get('country'),
+        state=request.args.get('state'),
+        city=request.args.get('city'),
+        zip_code=request.args.get('zip_code'),
+        address=request.args.get('address'),
+        grade_level=request.args.get('grade_level'),
     )
-    if school_not_exist_in_db(school_entity):
-        school_id = add_school(school_entity)
+    if len(find_school(school_condition)) == 0:
+        school_id = add_school(school_condition)
         if school_id is None:
             return "Failed to add school", 500
         return json.dumps({"school_id": school_id, "school_other_info": "ccdd"}) #WHAT
@@ -37,21 +38,26 @@ def Add_school():
 
 @app.route('/school/query')
 def Query_school():
-    try:
-        query_schoolID = int(request.args.get('school_id'))
-    except ValueError:
-        return "Only numeric school id is allowed", 400
+    school_condition = SchoolQueryCondition(
+        id=request.args.get('id'),
+        name=request.args.get('name'),
+        country=request.args.get('country'),
+        state=request.args.get('state'),
+        city=request.args.get('city'),
+        zip_code=request.args.get('zip_code'),
+        address=request.args.get('address'),
+        grade_level=request.args.get('grade_level'),
+    )
 
-    school: SchoolEntity = find_school(query_schoolID)
-
-    if school is None:
-        return "School not found", 404
-    return json.dumps(school._asdict())
-
+    school_list: list[SchoolEntity] = find_school(school_condition)
+    return json.dumps([
+        asdict(school)
+        for school in school_list
+    ])
 
 @app.route('/school/remove')
 def Remove_school():
-    school_id = int(request.args.get('school_id'))
+    school_id = int(request.args.get('id'))
     try:
         del_count = remove_school(school_id)
         return json.dumps({"removed_rows": del_count})
