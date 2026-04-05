@@ -1,7 +1,40 @@
 import psycopg2
-from db.vocab import SchoolEntity
 import os
 from typing import Optional
+
+from db.vocab import SchoolEntity
+
+def school_not_exist_in_db(school : SchoolEntity) -> bool:
+    # Connect to your PostgreSQL database
+    with psycopg2.connect(
+        dbname=os.environ["DB_NAME"],
+        user=os.environ["DB_USER"],
+        password=os.environ["DB_PASSWORD"],
+        host=os.environ["DB_HOST"],
+        port=os.environ["DB_PORT"],
+    ) as conn:
+        # Create a cursor object
+        with conn.cursor() as cur:
+            # Execute a query
+            cur.execute('''
+                SELECT id, name, country, state, city, zip_code, address, grade_level
+                FROM teacher_sch.schools 
+                WHERE name = %s 
+                AND country = %s
+                AND state = %s
+                AND city = %s
+                AND zip_code = %s
+                AND grade_level = %s; 
+            ''', 
+            [school.name, school.country, school.state, school.city, school.zip_code, school.grade_level])
+
+            # Fetch and print the results
+            rows = cur.fetchall()
+
+            if len(rows) == 0:
+                return True
+
+            return False
 
 def add_school(schoolentity : SchoolEntity) -> Optional[int]:
     # Connect to your PostgreSQL database
@@ -36,8 +69,8 @@ def add_school(schoolentity : SchoolEntity) -> Optional[int]:
             if len(rows) == 0:
                 return None
 
-            school = rows[0]
-            return school[0]
+            school_id = rows[0]
+            return school_id[0]
 
 
 
