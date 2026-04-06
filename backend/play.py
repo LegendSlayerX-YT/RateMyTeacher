@@ -4,14 +4,10 @@ from dotenv import load_dotenv
 from dataclasses import asdict
 
 from db.school import find_school, add_school, remove_school
-from db.vocab import SchoolEntity, SchoolQueryCondition
+from db.teacher import find_teacher, add_teacher, remove_teacher
+from db.vocab import SchoolEntity, SchoolQueryCondition, TeacherEntity, TeacherQueryCondition
 
 load_dotenv()
-
-schools = []
-schools_counter = 0
-teachers = []
-teachers_counter = 0
 
 app = Flask(__name__) #WHAT
 
@@ -57,54 +53,55 @@ def Query_school():
 
 @app.route('/school/remove')
 def Remove_school():
-    school_id = int(request.args.get('id'))
+    school_id = int(request.args.get('school_id'))
     try:
         del_count = remove_school(school_id)
         return json.dumps({"removed_rows": del_count})
     except:
         return "Looks like something went wrong", 500
 
+
+#TODO:change plz
 @app.route('/teacher/add')
 def Add_teacher():
-    global teachers_counter
-    teacher_id = str(teachers_counter)
-    teachers_counter += 1
-    teacher_school_id = request.args.get('school_id')
-    teacher_name = request.args.get('teacher_name')
-    teacher_email = request.args.get('teacher_email')
-    teacher = {
-        'teacher_name': teacher_name,
-        'teacher_email': teacher_email,
-        'school_id':teacher_school_id,
-        'teacher_id':teacher_id
-    }
-    teachers.append(teacher)
-    return str(teacher_id)
+    teacher_condition = TeacherQueryCondition(
+        id=None,
+        school_id = request.args.get('school_id'),
+        name = request.args.get('teacher_name'),
+        email = request.args.get('teacher_email')
+    )
+    if len(find_teacher(teacher_condition)) == 0:
+        teacher_id = add_teacher(teacher_condition)
+        if teacher_id is None:
+            return "Failed to add teacher", 500
+        return json.dumps({"school_id": teacher_id, "teacher_other_info": "ccdd"})
+    else:
+        return json.dumps({"error" : "The teacher already exists"})
 
-@app.route('/teacher/query') #what is this exactly
+@app.route('/teacher/query')
 def Query_teacher():
-    teacher_school_id = request.args.get('school_id')
-    teacher_name = request.args.get('teacher_name')
-    teacher_email = request.args.get('teacher_email')
-    teacher_id = request.args.get('teacher_id')
-    valid_teachers = []
-    for teacher in teachers:
-        if ((teacher['teacher_id'] == teacher_id or teacher_id == None) and 
-            (teacher['school_id'] == teacher_school_id or teacher_school_id == None) and 
-            (teacher['teacher_name'] == teacher_name or teacher_name == None) and
-            (teacher['teacher_email'] == teacher_email or teacher_email == None)
-            ):
-            valid_teachers.append(teacher)
-    return json.dumps(valid_teachers)
+    teacher_condition = TeacherQueryCondition(
+        id = request.args.get('teacher_id'),
+        school_id = request.args.get('school_id'),
+        name = request.args.get('teacher_name'),
+        email = request.args.get('teacher_email')
+    )
+    valid_teachers = find_teacher(teacher_condition)
+    return json.dumps([
+        asdict(teacher)
+        for teacher in valid_teachers
+    ])
 
+
+#TODO:change plz
 @app.route('/teacher/remove')
 def Remove_teacher():
-    teacher_id = request.args.get('teacher_id')
-    for teacher in teachers:
-        if teacher['teacher_id'] == teacher_id:
-            teachers.remove(teacher)
-            return '<h1>Success</h1>'
-    return '<h1>Failure</h1>'
+    teacher_id = int(request.args.get('teacher_id'))
+    try:
+        del_count = remove_teacher(teacher_id)
+        return json.dumps({"removed_rows": del_count})
+    except:
+        return "Looks like something went wrong", 500
     
 
 if __name__ == '__main__':
