@@ -1,6 +1,8 @@
-from typing import NamedTuple
+from typing import NamedTuple, Optional
+from dataclasses import dataclass
 
-class SchoolEntity(NamedTuple):
+@dataclass
+class SchoolEntity:
     id : int
     name : str
     country : str
@@ -9,3 +11,14 @@ class SchoolEntity(NamedTuple):
     zip_code : str
     address : str
     grade_level : str
+
+@dataclass
+class SchoolQueryCondition:
+    id: Optional[int]
+    name : Optional[str]
+    country : Optional[str]
+    state : Optional[str]
+    city : Optional[str]
+    zip_code : Optional[str]
+    address : Optional[str]
+    grade_level : Optional[str]
