@@ -22,3 +22,17 @@ class SchoolQueryCondition:
     zip_code : Optional[str]
     address : Optional[str]
     grade_level : Optional[str]
+
+@dataclass
+class TeacherEntity:
+    id: int
+    school_id: int
+    name: str
+    email: str
+
+@dataclass
+class TeacherQueryCondition:
+    id: Optional[int]
+    school_id: Optional[int]
+    name: Optional[str]
+    email: Optional[str]

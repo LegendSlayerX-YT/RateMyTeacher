@@ -4,14 +4,10 @@ from dotenv import load_dotenv
 from dataclasses import asdict
 
 from db.school import find_school, add_school, remove_school
-from db.vocab import SchoolEntity, SchoolQueryCondition
+from db.teacher import find_teacher
+from db.vocab import SchoolEntity, SchoolQueryCondition, TeacherEntity, TeacherQueryCondition
 
 load_dotenv()
-
-schools = []
-schools_counter = 0
-teachers = []
-teachers_counter = 0
 
 app = Flask(__name__) #WHAT
 
@@ -64,11 +60,10 @@ def Remove_school():
     except:
         return "Looks like something went wrong", 500
 
+
+#TODO:change plz
 @app.route('/teacher/add')
 def Add_teacher():
-    global teachers_counter
-    teacher_id = str(teachers_counter)
-    teachers_counter += 1
     teacher_school_id = request.args.get('school_id')
     teacher_name = request.args.get('teacher_name')
     teacher_email = request.args.get('teacher_email')
@@ -78,25 +73,25 @@ def Add_teacher():
         'school_id':teacher_school_id,
         'teacher_id':teacher_id
     }
-    teachers.append(teacher)
     return str(teacher_id)
 
-@app.route('/teacher/query') #what is this exactly
+@app.route('/teacher/query')
 def Query_teacher():
     teacher_school_id = request.args.get('school_id')
     teacher_name = request.args.get('teacher_name')
     teacher_email = request.args.get('teacher_email')
     teacher_id = request.args.get('teacher_id')
-    valid_teachers = []
-    for teacher in teachers:
-        if ((teacher['teacher_id'] == teacher_id or teacher_id == None) and 
-            (teacher['school_id'] == teacher_school_id or teacher_school_id == None) and 
-            (teacher['teacher_name'] == teacher_name or teacher_name == None) and
-            (teacher['teacher_email'] == teacher_email or teacher_email == None)
-            ):
-            valid_teachers.append(teacher)
+    teacher_condition = TeacherQueryCondition(
+        id = teacher_id,
+        school_id = teacher_school_id,
+        name = teacher_name,
+        email = teacher_email
+    )
+    valid_teachers = find_teacher(teacher_condition)
     return json.dumps(valid_teachers)
 
+
+#TODO:change plz
 @app.route('/teacher/remove')
 def Remove_teacher():
     teacher_id = request.args.get('teacher_id')
