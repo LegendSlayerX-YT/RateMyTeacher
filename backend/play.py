@@ -9,7 +9,7 @@ from db.vocab import SchoolEntity, SchoolQueryCondition, TeacherEntity, TeacherQ
 
 load_dotenv()
 
-app = Flask(__name__) #WHAT
+app = Flask(__name__)
 
 # http://127.0.0.1:5000/school/add?school_name=aabbcc&school_country=kkddd
 @app.route('/school/add')
@@ -61,7 +61,6 @@ def Remove_school():
         return "Looks like something went wrong", 500
 
 
-#TODO:change plz
 @app.route('/teacher/add')
 def Add_teacher():
     teacher_condition = TeacherQueryCondition(
@@ -74,7 +73,7 @@ def Add_teacher():
         teacher_id = add_teacher(teacher_condition)
         if teacher_id is None:
             return "Failed to add teacher", 500
-        return json.dumps({"school_id": teacher_id, "teacher_other_info": "ccdd"})
+        return json.dumps({"teacher_id": teacher_id, "teacher_other_info": "ccdd"})
     else:
         return json.dumps({"error" : "The teacher already exists"})
 
@@ -93,7 +92,6 @@ def Query_teacher():
     ])
 
 
-#TODO:change plz
 @app.route('/teacher/remove')
 def Remove_teacher():
     teacher_id = int(request.args.get('teacher_id'))
