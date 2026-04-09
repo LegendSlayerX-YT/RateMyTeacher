@@ -1,5 +1,5 @@
 import json
-from flask import Flask, request
+from flask import Flask, request, render_template
 from dotenv import load_dotenv
 from dataclasses import asdict
 
@@ -12,6 +12,11 @@ load_dotenv()
 app = Flask(__name__)
 
 # http://127.0.0.1:5000/school/add?school_name=aabbcc&school_country=kkddd
+
+@app.route('/')
+def Home():
+    return render_template('index.html')
+
 @app.route('/school/add')
 def Add_school():
     school_condition = SchoolQueryCondition(
