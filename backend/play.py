@@ -11,8 +11,6 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# http://127.0.0.1:5000/school/add?school_name=aabbcc&school_country=kkddd
-
 @app.route('/')
 def Home():
     return render_template('index.html')
@@ -91,10 +89,12 @@ def Query_teacher():
         email = request.args.get('teacher_email')
     )
     valid_teachers = find_teacher(teacher_condition)
-    return json.dumps([
+    output = json.dumps([
         asdict(teacher)
         for teacher in valid_teachers
     ])
+    print(output)
+    return output
 
 
 @app.route('/teacher/remove')
