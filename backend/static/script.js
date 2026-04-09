@@ -11,9 +11,8 @@ async function handleInput() {
     const data = await response.text();
     const parsed = JSON.parse(data);
     for (let i = 0; i < parsed.length; i++) {
-        const newDiv = document.createElement("input");
-        newDiv.type='button';
-        newDiv.value=`${parsed[i].name} \n ${parsed[i].email}`
+        const newDiv = document.createElement("button");
+        newDiv.innerHTML = `${parsed[i].name} <br> ${parsed[i].email}`
         teacher_list_elmt.appendChild(newDiv);
     } 
 }
