@@ -1,5 +1,6 @@
 .env
 myvenv
+.venv
 .vscode
 __pycache__
 

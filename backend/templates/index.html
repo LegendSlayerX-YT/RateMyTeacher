@@ -2,20 +2,25 @@
 <html lang="en">
     <head>
         <title>rate_my_teacher_fe</title>
+        <link rel="stylesheet" href="static/style.css">
     </head>
     <body>
         <div id="root">
             <h1>Rate My Teacher</h1>
         </div>
-        <div>
+        <div class="main_part">
             <p>Search for a Teacher</p>
             <p>Fill in Some of the Boxes</p>
             <label for="fname">Teacher Name:</label>
-            <input type="text" id="Teacher Name" name="fname">
+            <input type="text" id="Teacher Name" name="fname" />
+            <br>
             <label for="ename">Teacher Email:</label>
-            <input type="text" id="Teacher Email" name="ename">
-            <button id="Search">Search</button>
+            <input type="text" id="Teacher Email" name="ename" />
+            <br>
+            <input type="button" id="Search" value="Search" />
+            <div id="teacher_list"> </div>
         </div>
-        <script src="scripts/script.js"></script>
+        <script src="static/script.js"></script>
+
     </body>
 </html>
