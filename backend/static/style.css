@@ -29,6 +29,19 @@ body {
     letter-spacing: 1px;
 }
 
+/* School Info */
+#School\ Info {
+    background: white;
+    border-radius: 20px;
+    padding: 30px 40px;
+    max-width: 600px;
+    margin: 0 auto 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    color: #555;
+    font-size: 1.05em;
+    line-height: 1.6;
+}
+
 /* Main Container */
 .main_part {
     background: white;
