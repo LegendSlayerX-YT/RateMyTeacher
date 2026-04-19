@@ -11,9 +11,16 @@ load_dotenv()
 
 app = Flask(__name__)
 
-@app.route('/')
-def Home():
-    return render_template('index.html')
+@app.route('/school')
+def School():
+    return render_template('school.html')
+
+@app.route('/teacher')
+def Teacher():
+    school_id = request.args.get('school_id')
+    print(f"/teacher?school_id={school_id}")
+    return render_template('teacher.html', school_id = school_id if school_id is not None else "null")
+
 
 @app.route('/school/add')
 def Add_school():
@@ -31,7 +38,7 @@ def Add_school():
         school_id = add_school(school_condition)
         if school_id is None:
             return "Failed to add school", 500
-        return json.dumps({"school_id": school_id, "school_other_info": "ccdd"}) #WHAT
+        return json.dumps({"school_id": school_id})
     else:
         return json.dumps({"error" : "The school already exists"})
 
