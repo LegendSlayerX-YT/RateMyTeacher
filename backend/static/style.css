@@ -49,16 +49,16 @@ body {
 .school-name {
     font-size: 1.8em;
     color: #333;
-    margin-bottom: 20px;
     font-weight: 700;
-    padding-bottom: 15px;
-    border-bottom: 3px solid #667eea;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.school-info-container:hover .school-name {
+#School\ Info:hover .school-name {
     color: #667eea;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #667eea;
 }
 
 #School\ Info:hover .school-info-grid {
