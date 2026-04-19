@@ -1,15 +1,57 @@
-
 const name_elmt = document.getElementById('Teacher Name');
 const email_elmt = document.getElementById('Teacher Email');
 const button_elmt = document.getElementById('Search')
 const teacher_list_elmt = document.getElementById('teacher_list')
+const school_info_div = document.getElementById('School Info')
+
+async function onWindowLoad() {
+    if (SCHOOL_ID_FROM_LOAD == null){
+        return
+    }
+    const response = await fetch('/school/query?' + new URLSearchParams({
+        id: SCHOOL_ID_FROM_LOAD,
+    }));
+    const data = await response.text();
+    const parsed = JSON.parse(data);
+    if (parsed.length>0){
+        const newDiv = document.createElement("div");
+        newDiv.className = "school-info-container";
+        newDiv.innerHTML = `
+            <h2 class="school-name">${parsed[0].name ?? ''}</h2>
+            <div class="school-info-grid">
+                <div class="info-item">
+                    <span class="info-label">Location</span>
+                    <span class="info-value">${parsed[0].city ?? ''}, ${parsed[0].state ?? ''}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Address</span>
+                    <span class="info-value">${parsed[0].address ?? ''}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Zip Code</span>
+                    <span class="info-value">${parsed[0].zip_code ?? ''}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Grade Level</span>
+                    <span class="info-value">${parsed[0].grade_level ?? ''}</span>
+                </div>
+            </div>
+        `;
+        school_info_div.appendChild(newDiv);
+    }
+}
 
 async function handleInput() {
     const name = name_elmt.value;
     const email = email_elmt.value;
-    const response = await fetch(`/teacher/query?teacher_name=${String(name)}&teacher_email=${String(email)}`);
+    const response = await fetch('/teacher/query?' + new URLSearchParams({
+        teacher_name: name,
+        teacher_email: email,
+        school_id: SCHOOL_ID_FROM_LOAD ?? '',
+    }));
     const data = await response.text();
     const parsed = JSON.parse(data);
+    teacher_list_elmt.innerHTML = '';
     for (let i = 0; i < parsed.length; i++) {
         const newDiv = document.createElement("button");
         newDiv.innerHTML = `${parsed[i].name} <br> ${parsed[i].email}`

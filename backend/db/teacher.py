@@ -56,19 +56,19 @@ def find_teacher(teacher_condition : TeacherQueryCondition) -> list[TeacherEntit
             '''
             bind = []
 
-            if teacher_condition.id is not None:
+            if teacher_condition.id:
                 sql += 'AND id = %s '
                 bind.append(teacher_condition.id)
 
-            if teacher_condition.school_id is not None:
+            if teacher_condition.school_id:
                 sql += 'AND school_id = %s '
                 bind.append(teacher_condition.school_id)
 
-            if teacher_condition.name is not None:
+            if teacher_condition.name:
                 sql += 'AND name = %s '
                 bind.append(teacher_condition.name)
 
-            if teacher_condition.email is not None:
+            if teacher_condition.email:
                 sql += 'AND email = %s '
                 bind.append(teacher_condition.email)
 

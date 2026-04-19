@@ -29,6 +29,81 @@ body {
     letter-spacing: 1px;
 }
 
+/* School Info */
+#School\ Info {
+    background: white;
+    border-radius: 20px;
+    padding: 30px 40px;
+    max-width: 600px;
+    margin: 0 auto 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    color: #555;
+    font-size: 1.05em;
+    line-height: 1.6;
+}
+
+.school-info-container {
+    width: 100%;
+}
+
+.school-name {
+    font-size: 1.8em;
+    color: #333;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#School\ Info:hover .school-name {
+    color: #667eea;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #667eea;
+}
+
+#School\ Info:hover .school-info-grid {
+    display: grid;
+}
+
+.school-info-grid {
+    display: none;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    transition: all 0.3s ease;
+}
+
+
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+    transition: all 0.3s ease;
+}
+
+.info-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.info-label {
+    font-size: 0.85em;
+    font-weight: 600;
+    color: #667eea;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.info-value {
+    font-size: 1em;
+    color: #333;
+    font-weight: 500;
+}
+
 /* Main Container */
 .main_part {
     background: white;

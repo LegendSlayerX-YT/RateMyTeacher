@@ -62,36 +62,36 @@ def find_school(school_condition : SchoolQueryCondition) -> list[SchoolEntity]:
             '''
             bind = []
 
-            if school_condition.id is not None:
+            if school_condition.id:
                 sql += 'AND id = %s '
                 bind.append(school_condition.id)
 
-            if school_condition.name is not None:
+            if school_condition.name:
                 sql += 'AND name = %s '
                 bind.append(school_condition.name)
 
-            if school_condition.address is not None:
+            if school_condition.address:
                 sql += 'AND address = %s '
                 bind.append(school_condition.address)
 
-            if school_condition.city is not None:
+            if school_condition.city:
                 sql += 'AND city = %s '
                 bind.append(school_condition.city)
 
-            if school_condition.state is not None:
+            if school_condition.state:
                 sql += 'AND state = %s '
                 bind.append(school_condition.state)
 
 
-            if school_condition.country is not None:
+            if school_condition.country:
                 sql += 'AND country = %s '
                 bind.append(school_condition.country)
 
-            if school_condition.grade_level is not None:
+            if school_condition.grade_level:
                 sql += 'AND grade_level = %s '
                 bind.append(school_condition.grade_level)
 
-            if school_condition.zip_code is not None:
+            if school_condition.zip_code:
                 sql += 'AND zip_code = %s '
                 bind.append(school_condition.zip_code)
 
