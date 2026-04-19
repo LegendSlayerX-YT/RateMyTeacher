@@ -1,25 +1,11 @@
 import json
-from flask import Flask, request, render_template
-from dotenv import load_dotenv
+from flask import request, render_template
 from dataclasses import asdict
 
+from _app import app
 from db.school import find_school, add_school, remove_school
 from db.teacher import find_teacher, add_teacher, remove_teacher
 from db.vocab import SchoolEntity, SchoolQueryCondition, TeacherEntity, TeacherQueryCondition
-
-load_dotenv()
-
-app = Flask(__name__)
-
-@app.route('/school')
-def School():
-    return render_template('school.html')
-
-@app.route('/teacher')
-def Teacher():
-    school_id = request.args.get('school_id')
-    print(f"/teacher?school_id={school_id}")
-    return render_template('teacher.html', school_id = school_id if school_id is not None else "null")
 
 
 @app.route('/school/add')
@@ -113,6 +99,3 @@ def Remove_teacher():
     except:
         return "Looks like something went wrong", 500
     
-
-if __name__ == '__main__':
-    app.run()
