@@ -51,6 +51,7 @@ async function handleInput() {
     }));
     const data = await response.text();
     const parsed = JSON.parse(data);
+    teacher_list_elmt.innerHTML = '';
     for (let i = 0; i < parsed.length; i++) {
         const newDiv = document.createElement("button");
         newDiv.innerHTML = `${parsed[i].name} <br> ${parsed[i].email}`
