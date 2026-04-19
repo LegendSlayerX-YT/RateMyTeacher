@@ -61,6 +61,10 @@ body {
     color: #667eea;
 }
 
+#School\ Info:hover .school-info-grid {
+    display: grid;
+}
+
 .school-info-grid {
     display: none;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -68,9 +72,7 @@ body {
     transition: all 0.3s ease;
 }
 
-.school-info-container:hover .school-info-grid {
-    display: grid;
-}
+
 
 .info-item {
     display: flex;
