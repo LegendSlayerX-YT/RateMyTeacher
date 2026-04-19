@@ -15,12 +15,28 @@ async function onWindowLoad() {
     const parsed = JSON.parse(data);
     if (parsed.length>0){
         const newDiv = document.createElement("div");
-        newDiv.innerHTML = `${parsed[0].name ?? ''}
-        <br> ${parsed[0].state ?? ''} 
-        <br> ${parsed[0].city ?? ''}
-        <br> ${parsed[0].zip_code ?? ''}
-        <br> ${parsed[0].address ?? ''}
-        <br> ${parsed[0].grade_level ?? ''}`
+        newDiv.className = "school-info-container";
+        newDiv.innerHTML = `
+            <h2 class="school-name">${parsed[0].name ?? ''}</h2>
+            <div class="school-info-grid">
+                <div class="info-item">
+                    <span class="info-label">Location</span>
+                    <span class="info-value">${parsed[0].city ?? ''}, ${parsed[0].state ?? ''}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Address</span>
+                    <span class="info-value">${parsed[0].address ?? ''}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Zip Code</span>
+                    <span class="info-value">${parsed[0].zip_code ?? ''}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Grade Level</span>
+                    <span class="info-value">${parsed[0].grade_level ?? ''}</span>
+                </div>
+            </div>
+        `;
         school_info_div.appendChild(newDiv);
     }
 }
